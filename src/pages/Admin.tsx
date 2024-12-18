@@ -50,15 +50,15 @@ const Admin = () => {
       const updatedProject = {
         id: editItem?.id || String(Date.now()),
         title: {
-          en: formData.get("title_en"),
-          pt: formData.get("title_pt"),
+          en: String(formData.get("title_en") || ""),
+          pt: String(formData.get("title_pt") || ""),
         },
         description: {
-          en: formData.get("description_en"),
-          pt: formData.get("description_pt"),
+          en: String(formData.get("description_en") || ""),
+          pt: String(formData.get("description_pt") || ""),
         },
-        featured: Boolean(formData.get("featured")),
-        image: formData.get("image"),
+        featured: formData.get("featured") === "on",
+        image: String(formData.get("image") || ""),
       };
 
       const updatedProjects = editItem
@@ -71,14 +71,14 @@ const Admin = () => {
       const updatedPost = {
         id: editItem?.id || String(Date.now()),
         title: {
-          en: formData.get("title_en"),
-          pt: formData.get("title_pt"),
+          en: String(formData.get("title_en") || ""),
+          pt: String(formData.get("title_pt") || ""),
         },
         content: {
-          en: formData.get("content_en"),
-          pt: formData.get("content_pt"),
+          en: String(formData.get("content_en") || ""),
+          pt: String(formData.get("content_pt") || ""),
         },
-        published: Boolean(formData.get("published")),
+        published: formData.get("published") === "on",
       };
 
       const updatedPosts = editItem
