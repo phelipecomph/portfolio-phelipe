@@ -30,13 +30,13 @@ export function Navbar() {
 
   const SocialLinks = () => (
     <div className="flex items-center gap-4">
-      <a href="https://github.com/phelipemuller" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/phelipecomph" target="_blank" rel="noopener noreferrer">
         <Github className="w-5 h-5" />
       </a>
       <a href="https://linkedin.com/in/phelipemuller" target="_blank" rel="noopener noreferrer">
         <Linkedin className="w-5 h-5" />
       </a>
-      <a href="https://youtube.com/@phelipemuller" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.youtube.com/@_scientist" target="_blank" rel="noopener noreferrer">
         <Youtube className="w-5 h-5" />
       </a>
     </div>
