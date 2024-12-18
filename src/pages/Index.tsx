@@ -3,17 +3,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Github, Linkedin, Youtube } from "lucide-react";
+import { getStoredProjects } from "@/utils/storage";
 
 const Index = () => {
-  const { t } = useTranslation();
-
-  // This would come from your data source
-  const featuredProject = {
-    id: "1",
-    title: "Data Analysis Dashboard",
-    description: "A real-time analytics dashboard built with Python and React",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
-  };
+  const { t, i18n } = useTranslation();
+  const featuredProject = getStoredProjects().find(project => project.featured);
 
   return (
     <div className="animate-fadeIn">
@@ -74,31 +68,35 @@ const Index = () => {
       </section>
 
       {/* Featured Project Section */}
-      <section className="container mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
-          {t("featured.title")}
-        </h2>
-        <Card className="overflow-hidden animate-slideUp hover:shadow-xl transition-shadow duration-300">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="aspect-video">
-              <img
-                src={featuredProject.image}
-                alt={featuredProject.title}
-                className="w-full h-full object-cover"
-              />
+      {featuredProject && (
+        <section className="container mx-auto px-4 py-20">
+          <h2 className="text-3xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
+            {t("featured.title")}
+          </h2>
+          <Card className="overflow-hidden animate-slideUp hover:shadow-xl transition-shadow duration-300">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="aspect-video">
+                <img
+                  src={featuredProject.image}
+                  alt={featuredProject.title[i18n.language as keyof typeof featuredProject.title]}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6 flex flex-col justify-center">
+                <h3 className="text-2xl font-bold mb-4">
+                  {featuredProject.title[i18n.language as keyof typeof featuredProject.title]}
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  {featuredProject.description[i18n.language as keyof typeof featuredProject.description]}
+                </p>
+                <Button asChild className="w-fit bg-purple-600 hover:bg-purple-700">
+                  <Link to={`/projects/${featuredProject.id}`}>Learn More</Link>
+                </Button>
+              </div>
             </div>
-            <div className="p-6 flex flex-col justify-center">
-              <h3 className="text-2xl font-bold mb-4">{featuredProject.title}</h3>
-              <p className="text-muted-foreground mb-6">
-                {featuredProject.description}
-              </p>
-              <Button asChild className="w-fit bg-purple-600 hover:bg-purple-700">
-                <Link to={`/projects/${featuredProject.id}`}>Learn More</Link>
-              </Button>
-            </div>
-          </div>
-        </Card>
-      </section>
+          </Card>
+        </section>
+      )}
     </div>
   );
 };

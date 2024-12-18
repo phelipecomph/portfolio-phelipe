@@ -13,6 +13,10 @@ import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import "./lib/i18n";
+import { initializeStorage } from "./utils/storage";
+
+// Initialize storage with default data if empty
+initializeStorage();
 
 const queryClient = new QueryClient();
 

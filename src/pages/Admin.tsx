@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -13,11 +13,7 @@ import {
 import { ProjectForm } from "@/components/admin/ProjectForm";
 import { PostForm } from "@/components/admin/PostForm";
 import { AdminTable } from "@/components/admin/AdminTable";
-
-const STORAGE_KEYS = {
-  PROJECTS: "portfolio_projects",
-  POSTS: "portfolio_posts",
-};
+import { getStoredProjects, getStoredPosts, saveProjects, savePosts } from "@/utils/storage";
 
 const Admin = () => {
   const { t } = useTranslation();
@@ -25,84 +21,18 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState<"projects" | "posts">("projects");
   const [editItem, setEditItem] = useState<any | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  // Initialize state from localStorage or default values
-  const [projects, setProjects] = useState<any[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEYS.PROJECTS);
-    return saved ? JSON.parse(saved) : [
-      {
-        id: "1",
-        title: {
-          en: "Data Analysis Dashboard",
-          pt: "Dashboard de Análise de Dados",
-        },
-        description: {
-          en: "A real-time analytics dashboard built with Python and React",
-          pt: "Um dashboard de análise em tempo real construído com Python e React",
-        },
-        featured: true,
-        image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
-      },
-      {
-        id: "2",
-        title: {
-          en: "Machine Learning Pipeline",
-          pt: "Pipeline de Machine Learning",
-        },
-        description: {
-          en: "Automated ML pipeline for data processing and model training",
-          pt: "Pipeline automatizado de ML para processamento de dados e treinamento de modelos",
-        },
-        featured: false,
-        image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb",
-      },
-    ];
-  });
-
-  const [posts, setPosts] = useState<any[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEYS.POSTS);
-    return saved ? JSON.parse(saved) : [
-      {
-        id: "1",
-        title: {
-          en: "Getting Started with Data Science",
-          pt: "Começando com Ciência de Dados",
-        },
-        content: {
-          en: "Learn the basics of data science...",
-          pt: "Aprenda o básico de ciência de dados...",
-        },
-        published: true,
-      },
-      {
-        id: "2",
-        title: {
-          en: "Python Best Practices",
-          pt: "Melhores Práticas em Python",
-        },
-        content: {
-          en: "Tips and tricks for writing better Python code...",
-          pt: "Dicas e truques para escrever melhor código Python...",
-        },
-        published: true,
-      },
-    ];
-  });
-
-  // Save to localStorage whenever data changes
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
-  }, [projects]);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
-  }, [posts]);
+  const [projects, setProjects] = useState(getStoredProjects());
+  const [posts, setPosts] = useState(getStoredPosts());
 
   const handleDelete = (id: string) => {
     if (activeTab === "projects") {
-      setProjects(projects.filter((p) => p.id !== id));
+      const updatedProjects = projects.filter((p) => p.id !== id);
+      setProjects(updatedProjects);
+      saveProjects(updatedProjects);
     } else {
-      setPosts(posts.filter((p) => p.id !== id));
+      const updatedPosts = posts.filter((p) => p.id !== id);
+      setPosts(updatedPosts);
+      savePosts(updatedPosts);
     }
     toast({
       title: "Success",
@@ -131,11 +61,12 @@ const Admin = () => {
         image: formData.get("image"),
       };
 
-      if (editItem) {
-        setProjects(projects.map((p) => (p.id === editItem.id ? updatedProject : p)));
-      } else {
-        setProjects([...projects, updatedProject]);
-      }
+      const updatedProjects = editItem
+        ? projects.map((p) => (p.id === editItem.id ? updatedProject : p))
+        : [...projects, updatedProject];
+
+      setProjects(updatedProjects);
+      saveProjects(updatedProjects);
     } else {
       const updatedPost = {
         id: editItem?.id || String(Date.now()),
@@ -150,11 +81,12 @@ const Admin = () => {
         published: Boolean(formData.get("published")),
       };
 
-      if (editItem) {
-        setPosts(posts.map((p) => (p.id === editItem.id ? updatedPost : p)));
-      } else {
-        setPosts([...posts, updatedPost]);
-      }
+      const updatedPosts = editItem
+        ? posts.map((p) => (p.id === editItem.id ? updatedPost : p))
+        : [...posts, updatedPost];
+
+      setPosts(updatedPosts);
+      savePosts(updatedPosts);
     }
 
     setIsDialogOpen(false);
