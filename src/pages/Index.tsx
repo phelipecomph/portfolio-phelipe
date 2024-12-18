@@ -32,10 +32,10 @@ const Index = () => {
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Button asChild className="bg-purple-600 hover:bg-purple-700">
-              <Link to="/projects">View Projects</Link>
+              <Link to="/projects">{t("index.viewProjects")}View Projects</Link>
             </Button>
             <Button asChild variant="outline" className="border-purple-600 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-950">
-              <Link to="/contact">Get in Touch</Link>
+              <Link to="/contact">{t("contact.title")}</Link>
             </Button>
           </div>
           <div className="flex gap-6 mt-8">
