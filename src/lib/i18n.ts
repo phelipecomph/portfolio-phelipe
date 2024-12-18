@@ -19,6 +19,14 @@ const resources = {
       "admin.title": "Admin Panel",
       "admin.projects": "Manage Projects",
       "admin.posts": "Manage Posts",
+      "admin.addProject": "Add Project",
+      "admin.addPost": "Add Post",
+      "admin.editProject": "Edit Project",
+      "admin.editPost": "Edit Post",
+      "admin.save": "Save",
+      "admin.cancel": "Cancel",
+      "admin.delete": "Delete",
+      "admin.edit": "Edit",
     }
   },
   pt: {
@@ -38,6 +46,14 @@ const resources = {
       "admin.title": "Painel Admin",
       "admin.projects": "Gerenciar Projetos",
       "admin.posts": "Gerenciar Posts",
+      "admin.addProject": "Adicionar Projeto",
+      "admin.addPost": "Adicionar Post",
+      "admin.editProject": "Editar Projeto",
+      "admin.editPost": "Editar Post",
+      "admin.save": "Salvar",
+      "admin.cancel": "Cancelar",
+      "admin.delete": "Deletar",
+      "admin.edit": "Editar",
     }
   }
 };
