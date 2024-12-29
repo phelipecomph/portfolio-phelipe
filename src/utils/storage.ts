@@ -62,28 +62,38 @@ export const getStoredPosts = async (): Promise<BlogPost[]> => {
 export const saveProjects = async (projects: Project[]) => {
   const { error } = await supabase
     .from('projects')
-    .upsert(projects.map(project => ({
-      ...project,
-      title: project.title as any,
-      description: project.description as any,
-    })), { onConflict: 'id' });
+    .upsert(
+      projects.map(project => ({
+        ...project,
+        id: project.id || crypto.randomUUID(),
+        title: project.title,
+        description: project.description,
+      })),
+      { onConflict: 'id' }
+    );
 
   if (error) {
     console.error('Error saving projects:', error);
+    throw error;
   }
 };
 
 export const savePosts = async (posts: BlogPost[]) => {
   const { error } = await supabase
     .from('posts')
-    .upsert(posts.map(post => ({
-      ...post,
-      title: post.title as any,
-      content: post.content as any,
-    })), { onConflict: 'id' });
+    .upsert(
+      posts.map(post => ({
+        ...post,
+        id: post.id || crypto.randomUUID(),
+        title: post.title,
+        content: post.content,
+      })),
+      { onConflict: 'id' }
+    );
 
   if (error) {
     console.error('Error saving posts:', error);
+    throw error;
   }
 };
 
@@ -95,7 +105,7 @@ export const initializeStorage = async () => {
   if (projects.length === 0) {
     const defaultProjects: Project[] = [
       {
-        id: "1",
+        id: crypto.randomUUID(),
         title: {
           en: "Data Analysis Dashboard",
           pt: "Dashboard de Análise de Dados",
@@ -108,7 +118,7 @@ export const initializeStorage = async () => {
         image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
       },
       {
-        id: "2",
+        id: crypto.randomUUID(),
         title: {
           en: "Machine Learning Pipeline",
           pt: "Pipeline de Machine Learning",
@@ -127,7 +137,7 @@ export const initializeStorage = async () => {
   if (posts.length === 0) {
     const defaultPosts: BlogPost[] = [
       {
-        id: "1",
+        id: crypto.randomUUID(),
         title: {
           en: "Getting Started with Data Science",
           pt: "Começando com Ciência de Dados",
@@ -139,7 +149,7 @@ export const initializeStorage = async () => {
         published: true,
       },
       {
-        id: "2",
+        id: crypto.randomUUID(),
         title: {
           en: "Python Best Practices",
           pt: "Melhores Práticas em Python",
