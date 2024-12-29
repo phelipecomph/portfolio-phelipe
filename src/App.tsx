@@ -16,7 +16,7 @@ import "./lib/i18n";
 import { initializeStorage } from "./utils/storage";
 
 // Initialize storage with default data if empty
-initializeStorage();
+initializeStorage().catch(console.error);
 
 const queryClient = new QueryClient();
 

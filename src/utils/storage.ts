@@ -1,4 +1,6 @@
-// Define types for our data structures
+import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
+
 export interface LocalizedContent {
   en: string;
   pt: string;
@@ -19,34 +21,60 @@ export interface BlogPost {
   published: boolean;
 }
 
-// Storage keys
-const STORAGE_KEYS = {
-  PROJECTS: 'portfolio_projects',
-  POSTS: 'portfolio_posts',
+export const getStoredProjects = async (): Promise<Project[]> => {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching projects:', error);
+    return [];
+  }
+
+  return data || [];
 };
 
-// Helper functions
-export const getStoredProjects = (): Project[] => {
-  const stored = localStorage.getItem(STORAGE_KEYS.PROJECTS);
-  return stored ? JSON.parse(stored) : [];
+export const getStoredPosts = async (): Promise<BlogPost[]> => {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching posts:', error);
+    return [];
+  }
+
+  return data || [];
 };
 
-export const getStoredPosts = (): BlogPost[] => {
-  const stored = localStorage.getItem(STORAGE_KEYS.POSTS);
-  return stored ? JSON.parse(stored) : [];
+export const saveProjects = async (projects: Project[]) => {
+  const { error } = await supabase
+    .from('projects')
+    .upsert(projects, { onConflict: 'id' });
+
+  if (error) {
+    console.error('Error saving projects:', error);
+  }
 };
 
-export const saveProjects = (projects: Project[]) => {
-  localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+export const savePosts = async (posts: BlogPost[]) => {
+  const { error } = await supabase
+    .from('posts')
+    .upsert(posts, { onConflict: 'id' });
+
+  if (error) {
+    console.error('Error saving posts:', error);
+  }
 };
 
-export const savePosts = (posts: BlogPost[]) => {
-  localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
-};
+// Initialize with default data if empty
+export const initializeStorage = async () => {
+  const projects = await getStoredProjects();
+  const posts = await getStoredPosts();
 
-// Initialize with default data if storage is empty
-export const initializeStorage = () => {
-  if (!localStorage.getItem(STORAGE_KEYS.PROJECTS)) {
+  if (projects.length === 0) {
     const defaultProjects: Project[] = [
       {
         id: "1",
@@ -75,10 +103,10 @@ export const initializeStorage = () => {
         image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb",
       },
     ];
-    saveProjects(defaultProjects);
+    await saveProjects(defaultProjects);
   }
 
-  if (!localStorage.getItem(STORAGE_KEYS.POSTS)) {
+  if (posts.length === 0) {
     const defaultPosts: BlogPost[] = [
       {
         id: "1",
@@ -105,6 +133,6 @@ export const initializeStorage = () => {
         published: true,
       },
     ];
-    savePosts(defaultPosts);
+    await savePosts(defaultPosts);
   }
 };
