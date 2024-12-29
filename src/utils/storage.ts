@@ -1,5 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Json } from "@/integrations/supabase/types";
 
 export interface LocalizedContent {
   en: string;
@@ -66,8 +66,8 @@ export const saveProjects = async (projects: Project[]) => {
       projects.map(project => ({
         ...project,
         id: project.id || crypto.randomUUID(),
-        title: project.title,
-        description: project.description,
+        title: project.title as Json,
+        description: project.description as Json,
       })),
       { onConflict: 'id' }
     );
@@ -85,8 +85,8 @@ export const savePosts = async (posts: BlogPost[]) => {
       posts.map(post => ({
         ...post,
         id: post.id || crypto.randomUUID(),
-        title: post.title,
-        content: post.content,
+        title: post.title as Json,
+        content: post.content as Json,
       })),
       { onConflict: 'id' }
     );
