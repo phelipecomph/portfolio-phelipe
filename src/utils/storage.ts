@@ -114,6 +114,7 @@ export const initializeStorage = async () => {
         },
         featured: true,
         image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
+        created_at: new Date().toISOString(),
       },
       {
         id: crypto.randomUUID(),
@@ -127,6 +128,7 @@ export const initializeStorage = async () => {
         },
         featured: false,
         image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb",
+        created_at: new Date().toISOString(),
       },
     ];
     await saveProjects(defaultProjects);
@@ -145,6 +147,7 @@ export const initializeStorage = async () => {
           pt: "Aprenda o básico de ciência de dados...",
         },
         published: true,
+        created_at: new Date().toISOString(),
       },
       {
         id: crypto.randomUUID(),
@@ -157,6 +160,7 @@ export const initializeStorage = async () => {
           pt: "Dicas e truques para escrever melhor código Python...",
         },
         published: true,
+        created_at: new Date().toISOString(),
       },
     ];
     await savePosts(defaultPosts);
