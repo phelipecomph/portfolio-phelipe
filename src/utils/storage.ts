@@ -65,7 +65,6 @@ export const saveProjects = async (projects: Project[]) => {
     .upsert(
       projects.map(project => ({
         ...project,
-        id: project.id || crypto.randomUUID(),
         title: project.title as unknown as Json,
         description: project.description as unknown as Json,
       })),
@@ -84,7 +83,6 @@ export const savePosts = async (posts: BlogPost[]) => {
     .upsert(
       posts.map(post => ({
         ...post,
-        id: post.id || crypto.randomUUID(),
         title: post.title as unknown as Json,
         content: post.content as unknown as Json,
       })),

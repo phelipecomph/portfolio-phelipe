@@ -58,7 +58,7 @@ const Admin = () => {
   const handleSave = async (formData: FormData) => {
     if (activeTab === "projects") {
       const updatedProject = {
-        id: editItem?.id || String(Date.now()),
+        id: editItem?.id || crypto.randomUUID(),
         title: {
           en: String(formData.get("title_en") || ""),
           pt: String(formData.get("title_pt") || ""),
@@ -79,7 +79,7 @@ const Admin = () => {
       queryClient.setQueryData(['projects'], updatedProjects);
     } else {
       const updatedPost = {
-        id: editItem?.id || String(Date.now()),
+        id: editItem?.id || crypto.randomUUID(),
         title: {
           en: String(formData.get("title_en") || ""),
           pt: String(formData.get("title_pt") || ""),
