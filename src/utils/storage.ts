@@ -36,8 +36,8 @@ export const getStoredProjects = async (): Promise<Project[]> => {
 
   return (data || []).map(project => ({
     ...project,
-    title: project.title as LocalizedContent,
-    description: project.description as LocalizedContent,
+    title: project.title as unknown as LocalizedContent,
+    description: project.description as unknown as LocalizedContent,
   }));
 };
 
@@ -54,8 +54,8 @@ export const getStoredPosts = async (): Promise<BlogPost[]> => {
 
   return (data || []).map(post => ({
     ...post,
-    title: post.title as LocalizedContent,
-    content: post.content as LocalizedContent,
+    title: post.title as unknown as LocalizedContent,
+    content: post.content as unknown as LocalizedContent,
   }));
 };
 
@@ -66,8 +66,8 @@ export const saveProjects = async (projects: Project[]) => {
       projects.map(project => ({
         ...project,
         id: project.id || crypto.randomUUID(),
-        title: project.title as Json,
-        description: project.description as Json,
+        title: project.title as unknown as Json,
+        description: project.description as unknown as Json,
       })),
       { onConflict: 'id' }
     );
@@ -85,8 +85,8 @@ export const savePosts = async (posts: BlogPost[]) => {
       posts.map(post => ({
         ...post,
         id: post.id || crypto.randomUUID(),
-        title: post.title as Json,
-        content: post.content as Json,
+        title: post.title as unknown as Json,
+        content: post.content as unknown as Json,
       })),
       { onConflict: 'id' }
     );
