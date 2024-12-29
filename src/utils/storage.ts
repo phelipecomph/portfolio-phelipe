@@ -12,7 +12,7 @@ export interface Project {
   description: LocalizedContent;
   image: string;
   featured: boolean;
-  created_at?: string;
+  created_at: string;
 }
 
 export interface BlogPost {
@@ -20,7 +20,7 @@ export interface BlogPost {
   title: LocalizedContent;
   content: LocalizedContent;
   published: boolean;
-  created_at?: string;
+  created_at: string;
 }
 
 export const getStoredProjects = async (): Promise<Project[]> => {

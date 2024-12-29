@@ -69,6 +69,7 @@ const Admin = () => {
         },
         featured: formData.get("featured") === "on",
         image: String(formData.get("image") || ""),
+        created_at: editItem?.created_at || new Date().toISOString(),
       };
 
       const updatedProjects = editItem
@@ -89,6 +90,7 @@ const Admin = () => {
           pt: String(formData.get("content_pt") || ""),
         },
         published: formData.get("published") === "on",
+        created_at: editItem?.created_at || new Date().toISOString(),
       };
 
       const updatedPosts = editItem
