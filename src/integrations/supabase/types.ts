@@ -40,6 +40,7 @@ export type Database = {
           featured: boolean | null
           id: string
           image: string
+          published: boolean | null
           title: Json
         }
         Insert: {
@@ -48,6 +49,7 @@ export type Database = {
           featured?: boolean | null
           id?: string
           image: string
+          published?: boolean | null
           title?: Json
         }
         Update: {
@@ -56,6 +58,7 @@ export type Database = {
           featured?: boolean | null
           id?: string
           image?: string
+          published?: boolean | null
           title?: Json
         }
         Relationships: []

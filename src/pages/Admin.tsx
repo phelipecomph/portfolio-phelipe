@@ -68,6 +68,7 @@ const Admin = () => {
           pt: String(formData.get("description_pt") || ""),
         },
         featured: formData.get("featured") === "on",
+        published: formData.get("published") === "on",
         image: String(formData.get("image") || ""),
         created_at: editItem?.created_at || new Date().toISOString(),
       };

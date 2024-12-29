@@ -85,12 +85,21 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
             />
           </div>
 
-          <div className="flex items-center gap-2">
-            <Switch
-              name="featured"
-              defaultChecked={project?.featured || false}
-            />
-            <label className="text-sm font-medium">{t("admin.featured")}</label>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <Switch
+                name="featured"
+                defaultChecked={project?.featured || false}
+              />
+              <label className="text-sm font-medium">{t("admin.featured")}</label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                name="published"
+                defaultChecked={project?.published || false}
+              />
+              <label className="text-sm font-medium">{t("admin.published")}</label>
+            </div>
           </div>
         </div>
       </Card>
