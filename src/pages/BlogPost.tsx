@@ -2,11 +2,17 @@ import { useParams } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { getStoredPosts } from "@/utils/storage";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 
 const BlogPost = () => {
   const { id } = useParams();
   const { i18n } = useTranslation();
-  const post = getStoredPosts().find(p => p.id === id);
+  const { data: posts = [] } = useQuery({
+    queryKey: ['posts'],
+    queryFn: getStoredPosts,
+  });
+
+  const post = posts.find(p => p.id === id);
 
   if (!post) {
     return (

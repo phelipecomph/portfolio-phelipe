@@ -2,10 +2,14 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { getStoredProjects } from "@/utils/storage";
+import { useQuery } from "@tanstack/react-query";
 
 const Projects = () => {
   const { t, i18n } = useTranslation();
-  const projects = getStoredProjects();
+  const { data: projects = [] } = useQuery({
+    queryKey: ['projects'],
+    queryFn: getStoredProjects,
+  });
 
   return (
     <div className="container mx-auto px-4 py-20 animate-fadeIn">

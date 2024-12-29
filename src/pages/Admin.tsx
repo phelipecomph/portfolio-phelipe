@@ -14,25 +14,35 @@ import { ProjectForm } from "@/components/admin/ProjectForm";
 import { PostForm } from "@/components/admin/PostForm";
 import { AdminTable } from "@/components/admin/AdminTable";
 import { getStoredProjects, getStoredPosts, saveProjects, savePosts } from "@/utils/storage";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const Admin = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<"projects" | "posts">("projects");
   const [editItem, setEditItem] = useState<any | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [projects, setProjects] = useState(getStoredProjects());
-  const [posts, setPosts] = useState(getStoredPosts());
 
-  const handleDelete = (id: string) => {
+  const { data: projects = [] } = useQuery({
+    queryKey: ['projects'],
+    queryFn: getStoredProjects,
+  });
+
+  const { data: posts = [] } = useQuery({
+    queryKey: ['posts'],
+    queryFn: getStoredPosts,
+  });
+
+  const handleDelete = async (id: string) => {
     if (activeTab === "projects") {
       const updatedProjects = projects.filter((p) => p.id !== id);
-      setProjects(updatedProjects);
-      saveProjects(updatedProjects);
+      await saveProjects(updatedProjects);
+      queryClient.setQueryData(['projects'], updatedProjects);
     } else {
       const updatedPosts = posts.filter((p) => p.id !== id);
-      setPosts(updatedPosts);
-      savePosts(updatedPosts);
+      await savePosts(updatedPosts);
+      queryClient.setQueryData(['posts'], updatedPosts);
     }
     toast({
       title: "Success",
@@ -45,7 +55,7 @@ const Admin = () => {
     setIsDialogOpen(true);
   };
 
-  const handleSave = (formData: FormData) => {
+  const handleSave = async (formData: FormData) => {
     if (activeTab === "projects") {
       const updatedProject = {
         id: editItem?.id || String(Date.now()),
@@ -65,8 +75,8 @@ const Admin = () => {
         ? projects.map((p) => (p.id === editItem.id ? updatedProject : p))
         : [...projects, updatedProject];
 
-      setProjects(updatedProjects);
-      saveProjects(updatedProjects);
+      await saveProjects(updatedProjects);
+      queryClient.setQueryData(['projects'], updatedProjects);
     } else {
       const updatedPost = {
         id: editItem?.id || String(Date.now()),
@@ -85,8 +95,8 @@ const Admin = () => {
         ? posts.map((p) => (p.id === editItem.id ? updatedPost : p))
         : [...posts, updatedPost];
 
-      setPosts(updatedPosts);
-      savePosts(updatedPosts);
+      await savePosts(updatedPosts);
+      queryClient.setQueryData(['posts'], updatedPosts);
     }
 
     setIsDialogOpen(false);

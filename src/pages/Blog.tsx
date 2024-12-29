@@ -2,16 +2,22 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { getStoredPosts } from "@/utils/storage";
+import { useQuery } from "@tanstack/react-query";
 
 const Blog = () => {
   const { t, i18n } = useTranslation();
-  const posts = getStoredPosts().filter(post => post.published);
+  const { data: posts = [] } = useQuery({
+    queryKey: ['posts'],
+    queryFn: getStoredPosts,
+  });
+
+  const publishedPosts = posts.filter(post => post.published);
 
   return (
     <div className="container mx-auto px-4 py-20 animate-fadeIn">
       <h1 className="text-4xl font-bold mb-12 text-center">Blog</h1>
       <div className="grid md:grid-cols-2 gap-8">
-        {posts.map((post) => (
+        {publishedPosts.map((post) => (
           <Card key={post.id} className="overflow-hidden animate-slideUp">
             <Link to={`/blog/${post.id}`}>
               <div className="p-6">

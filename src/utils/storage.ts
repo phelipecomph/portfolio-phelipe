@@ -12,6 +12,7 @@ export interface Project {
   description: LocalizedContent;
   image: string;
   featured: boolean;
+  created_at?: string;
 }
 
 export interface BlogPost {
@@ -19,6 +20,7 @@ export interface BlogPost {
   title: LocalizedContent;
   content: LocalizedContent;
   published: boolean;
+  created_at?: string;
 }
 
 export const getStoredProjects = async (): Promise<Project[]> => {
@@ -32,7 +34,11 @@ export const getStoredProjects = async (): Promise<Project[]> => {
     return [];
   }
 
-  return data || [];
+  return (data || []).map(project => ({
+    ...project,
+    title: project.title as LocalizedContent,
+    description: project.description as LocalizedContent,
+  }));
 };
 
 export const getStoredPosts = async (): Promise<BlogPost[]> => {
@@ -46,13 +52,21 @@ export const getStoredPosts = async (): Promise<BlogPost[]> => {
     return [];
   }
 
-  return data || [];
+  return (data || []).map(post => ({
+    ...post,
+    title: post.title as LocalizedContent,
+    content: post.content as LocalizedContent,
+  }));
 };
 
 export const saveProjects = async (projects: Project[]) => {
   const { error } = await supabase
     .from('projects')
-    .upsert(projects, { onConflict: 'id' });
+    .upsert(projects.map(project => ({
+      ...project,
+      title: project.title as any,
+      description: project.description as any,
+    })), { onConflict: 'id' });
 
   if (error) {
     console.error('Error saving projects:', error);
@@ -62,7 +76,11 @@ export const saveProjects = async (projects: Project[]) => {
 export const savePosts = async (posts: BlogPost[]) => {
   const { error } = await supabase
     .from('posts')
-    .upsert(posts, { onConflict: 'id' });
+    .upsert(posts.map(post => ({
+      ...post,
+      title: post.title as any,
+      content: post.content as any,
+    })), { onConflict: 'id' });
 
   if (error) {
     console.error('Error saving posts:', error);
