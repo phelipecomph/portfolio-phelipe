@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
 import { Card } from "@/components/ui/card";
-import { getStoredProjects } from "@/utils/storage";
+import { getStoredProjects } from "@/services/storage";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import type { Project } from "@/types/content";
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const { i18n } = useTranslation();
-  const { data: projects = [] } = useQuery({
+  const { data: projects = [] } = useQuery<Project[]>({
     queryKey: ['projects'],
     queryFn: getStoredProjects,
   });

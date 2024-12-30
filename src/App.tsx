@@ -15,7 +15,7 @@ import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import "./lib/i18n";
-import { initializeStorage } from "./utils/storage";
+import { initializeStorage } from "@/services/storage";
 
 // Initialize storage with default data if empty
 initializeStorage().catch(console.error);

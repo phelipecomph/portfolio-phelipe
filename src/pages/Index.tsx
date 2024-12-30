@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Github, Linkedin, Youtube } from "lucide-react";
-import { getStoredProjects } from "@/utils/storage";
+import { getStoredProjects } from "@/services/storage";
 import { useQuery } from "@tanstack/react-query";
+import type { Project } from "@/types/content";
 
 const Index = () => {
   const { t, i18n } = useTranslation();
-  const { data: projects } = useQuery({
+  const { data: projects = [] } = useQuery<Project[]>({
     queryKey: ['projects'],
     queryFn: getStoredProjects,
   });
 
-  const featuredProject = projects?.find(project => project.featured);
+  const featuredProject = projects.find(project => project.featured);
 
   return (
     <div className="animate-fadeIn">

@@ -1,12 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
-import { getStoredPosts } from "@/utils/storage";
+import { getStoredPosts } from "@/services/storage";
 import { useQuery } from "@tanstack/react-query";
+import type { BlogPost } from "@/types/content";
 
 const Blog = () => {
   const { t, i18n } = useTranslation();
-  const { data: posts = [] } = useQuery({
+  const { data: posts = [] } = useQuery<BlogPost[]>({
     queryKey: ['posts'],
     queryFn: getStoredPosts,
   });
