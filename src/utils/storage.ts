@@ -12,6 +12,7 @@ export interface Project {
   description: LocalizedContent;
   image: string;
   featured: boolean;
+  published: boolean;
   created_at: string;
 }
 
@@ -113,6 +114,7 @@ export const initializeStorage = async () => {
           pt: "Um dashboard de análise em tempo real construído com Python e React",
         },
         featured: true,
+        published: true,
         image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
         created_at: new Date().toISOString(),
       },
@@ -127,6 +129,7 @@ export const initializeStorage = async () => {
           pt: "Pipeline automatizado de ML para processamento de dados e treinamento de modelos",
         },
         featured: false,
+        published: true,
         image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb",
         created_at: new Date().toISOString(),
       },
