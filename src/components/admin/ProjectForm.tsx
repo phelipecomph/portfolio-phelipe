@@ -1,9 +1,11 @@
 import { useTranslation } from "react-i18next";
+import { useRef } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { LocalizedFields } from "./LocalizedFields";
+import { MarkdownToolbar } from "./MarkdownToolbar";
 import type { Project } from "@/types/content";
 
 interface ProjectFormProps {
@@ -14,6 +16,8 @@ interface ProjectFormProps {
 
 export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
   const { t } = useTranslation();
+  const descriptionEnRef = useRef<HTMLTextAreaElement>(null);
+  const descriptionPtRef = useRef<HTMLTextAreaElement>(null);
 
   return (
     <form
@@ -32,15 +36,31 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
         defaultValuePt={project?.title?.pt}
       />
 
-      <LocalizedFields
-        nameEn="description_en"
-        namePt="description_pt"
-        labelEn="admin.descriptionEn"
-        labelPt="admin.descriptionPt"
-        defaultValueEn={project?.description?.en}
-        defaultValuePt={project?.description?.pt}
-        type="textarea"
-      />
+      <div className="space-y-4">
+        <div>
+          <label className="text-sm font-medium">{t("admin.descriptionEn")}</label>
+          <MarkdownToolbar textareaRef={descriptionEnRef} />
+          <textarea
+            ref={descriptionEnRef}
+            name="description_en"
+            defaultValue={project?.description?.en}
+            required
+            className="min-h-[40vh] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">{t("admin.descriptionPt")}</label>
+          <MarkdownToolbar textareaRef={descriptionPtRef} />
+          <textarea
+            ref={descriptionPtRef}
+            name="description_pt"
+            defaultValue={project?.description?.pt}
+            required
+            className="min-h-[40vh] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          />
+        </div>
+      </div>
 
       <Card className="p-4">
         <div className="space-y-4">
