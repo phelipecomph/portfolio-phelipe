@@ -1,5 +1,34 @@
 import { supabase } from "@/integrations/supabase/client";
-import type { Project, BlogPost } from "@/types/content";
+import type { Project, BlogPost, LocalizedContent } from "@/types/content";
+import type { Json } from "@/integrations/supabase/types";
+
+interface RawProject {
+  id: string;
+  title: Json;
+  description: Json;
+  image: string;
+  featured: boolean;
+  published: boolean;
+  created_at: string;
+}
+
+interface RawBlogPost {
+  id: string;
+  title: Json;
+  content: Json;
+  published: boolean;
+  created_at: string;
+}
+
+const transformLocalizedContent = (json: Json): LocalizedContent => {
+  if (typeof json === 'object' && json !== null) {
+    return {
+      en: String(json.en || ''),
+      pt: String(json.pt || '')
+    };
+  }
+  return { en: '', pt: '' };
+};
 
 export const initializeStorage = async () => {
   const { data: projects } = await supabase.from("projects").select("*");
@@ -14,11 +43,21 @@ export const initializeStorage = async () => {
 export const getStoredProjects = async (): Promise<Project[]> => {
   const { data, error } = await supabase.from("projects").select("*");
   if (error) throw error;
-  return data || [];
+  
+  return (data as RawProject[] || []).map(project => ({
+    ...project,
+    title: transformLocalizedContent(project.title),
+    description: transformLocalizedContent(project.description)
+  }));
 };
 
 export const getStoredPosts = async (): Promise<BlogPost[]> => {
   const { data, error } = await supabase.from("posts").select("*");
   if (error) throw error;
-  return data || [];
+  
+  return (data as RawBlogPost[] || []).map(post => ({
+    ...post,
+    title: transformLocalizedContent(post.title),
+    content: transformLocalizedContent(post.content)
+  }));
 };
