@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { getStoredProjects } from "@/services/storage";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import { MarkdownContent } from "@/components/MarkdownContent";
 import type { Project } from "@/types/content";
 
 const ProjectDetail = () => {
@@ -37,11 +38,10 @@ const ProjectDetail = () => {
           <h1 className="text-4xl font-bold mb-6">
             {project.title[i18n.language as keyof typeof project.title]}
           </h1>
-          <div className="prose dark:prose-invert max-w-none">
-            <p className="text-xl text-muted-foreground mb-8">
-              {project.description[i18n.language as keyof typeof project.description]}
-            </p>
-          </div>
+          <MarkdownContent 
+            content={project.description[i18n.language as keyof typeof project.description]}
+            className="mt-6"
+          />
         </div>
       </Card>
     </div>

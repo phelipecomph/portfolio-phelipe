@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { getStoredPosts } from "@/services/storage";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import { MarkdownContent } from "@/components/MarkdownContent";
 import type { BlogPost } from "@/types/content";
 
 const BlogPostPage = () => {
@@ -31,11 +32,12 @@ const BlogPostPage = () => {
             {post.title[i18n.language as keyof typeof post.title]}
           </h1>
           <p className="text-muted-foreground mb-8">
-            {new Date().toLocaleDateString(i18n.language)}
+            {new Date(post.created_at).toLocaleDateString(i18n.language)}
           </p>
-          <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap">
-            {post.content[i18n.language as keyof typeof post.content]}
-          </div>
+          <MarkdownContent 
+            content={post.content[i18n.language as keyof typeof post.content]}
+            className="mt-6"
+          />
         </div>
       </Card>
     </div>
