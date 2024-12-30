@@ -20,11 +20,18 @@ interface RawBlogPost {
   created_at: string;
 }
 
+interface LocalizedJson {
+  en?: string;
+  pt?: string;
+  [key: string]: Json | undefined;
+}
+
 const transformLocalizedContent = (json: Json): LocalizedContent => {
-  if (typeof json === 'object' && json !== null) {
+  if (typeof json === 'object' && json !== null && !Array.isArray(json)) {
+    const localizedJson = json as LocalizedJson;
     return {
-      en: String(json.en || ''),
-      pt: String(json.pt || '')
+      en: String(localizedJson.en || ''),
+      pt: String(localizedJson.pt || '')
     };
   }
   return { en: '', pt: '' };
