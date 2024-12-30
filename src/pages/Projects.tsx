@@ -1,14 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
-import { getStoredProjects } from "@/utils/storage";
+import { getProjects } from "@/services/projects";
 import { useQuery } from "@tanstack/react-query";
 
 const Projects = () => {
   const { t, i18n } = useTranslation();
   const { data: projects = [] } = useQuery({
     queryKey: ['projects'],
-    queryFn: getStoredProjects,
+    queryFn: getProjects,
   });
 
   // Filter only published projects

@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { LocalizedFields } from "./LocalizedFields";
+import type { BlogPost } from "@/types/content";
 
 interface PostFormProps {
-  post?: any;
+  post?: BlogPost;
   onSubmit: (formData: FormData) => void;
   onCancel: () => void;
 }
@@ -22,55 +22,25 @@ export function PostForm({ post, onSubmit, onCancel }: PostFormProps) {
       }}
       className="space-y-6"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="p-4">
-          <h3 className="font-semibold mb-4">English Content</h3>
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium">{t("admin.titleEn")}</label>
-              <Input
-                name="title_en"
-                defaultValue={post?.title?.en || ""}
-                required
-                className="mt-1"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">{t("admin.contentEn")}</label>
-              <Textarea
-                name="content_en"
-                defaultValue={post?.content?.en || ""}
-                required
-                className="mt-1 h-60"
-              />
-            </div>
-          </div>
-        </Card>
+      <LocalizedFields
+        nameEn="title_en"
+        namePt="title_pt"
+        labelEn="admin.titleEn"
+        labelPt="admin.titlePt"
+        defaultValueEn={post?.title?.en}
+        defaultValuePt={post?.title?.pt}
+      />
 
-        <Card className="p-4">
-          <h3 className="font-semibold mb-4">Portuguese Content</h3>
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium">{t("admin.titlePt")}</label>
-              <Input
-                name="title_pt"
-                defaultValue={post?.title?.pt || ""}
-                required
-                className="mt-1"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">{t("admin.contentPt")}</label>
-              <Textarea
-                name="content_pt"
-                defaultValue={post?.content?.pt || ""}
-                required
-                className="mt-1 h-60"
-              />
-            </div>
-          </div>
-        </Card>
-      </div>
+      <LocalizedFields
+        nameEn="content_en"
+        namePt="content_pt"
+        labelEn="admin.contentEn"
+        labelPt="admin.contentPt"
+        defaultValueEn={post?.content?.en}
+        defaultValuePt={post?.content?.pt}
+        type="textarea"
+        textareaHeight="h-60"
+      />
 
       <Card className="p-4">
         <div className="flex items-center gap-2">
