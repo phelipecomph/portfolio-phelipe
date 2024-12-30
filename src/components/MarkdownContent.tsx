@@ -9,6 +9,13 @@ interface MarkdownContentProps {
   className?: string;
 }
 
+// Add proper typing for the code component props
+interface CodeProps extends React.HTMLAttributes<HTMLElement> {
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
+
 export function MarkdownContent({ content, className }: MarkdownContentProps) {
   return (
     <ReactMarkdown
@@ -23,7 +30,7 @@ export function MarkdownContent({ content, className }: MarkdownContentProps) {
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw, rehypeSanitize]}
       components={{
-        code({ node, inline, className, children, ...props }) {
+        code({ node, inline, className, children, ...props }: CodeProps) {
           return (
             <code className={cn("bg-muted px-1.5 py-0.5 rounded", className)} {...props}>
               {children}
