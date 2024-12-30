@@ -35,77 +35,91 @@ export function MarkdownToolbar({ textareaRef }: MarkdownToolbarProps) {
     textarea.selectionEnd = end + before.length;
   };
 
+  const handleButtonClick = (e: React.MouseEvent, before: string, after?: string) => {
+    e.preventDefault(); // Prevent form submission
+    insertText(before, after);
+  };
+
   return (
     <div className="flex flex-wrap gap-2 p-2 bg-muted rounded-md mb-2">
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("**", "**")}
+        onClick={(e) => handleButtonClick(e, "**", "**")}
         title="Negrito"
+        type="button" // Explicitly set type to button
       >
         <Bold className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("*", "*")}
+        onClick={(e) => handleButtonClick(e, "*", "*")}
         title="Itálico"
+        type="button"
       >
         <Italic className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("[", "](url)")}
+        onClick={(e) => handleButtonClick(e, "[", "](url)")}
         title="Link"
+        type="button"
       >
         <Link className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("![alt text](", ")")}
+        onClick={(e) => handleButtonClick(e, "![alt text](", ")")}
         title="Imagem"
+        type="button"
       >
         <Image className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("- ")}
+        onClick={(e) => handleButtonClick(e, "- ")}
         title="Lista"
+        type="button"
       >
         <List className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("# ")}
+        onClick={(e) => handleButtonClick(e, "# ")}
         title="Título 1"
+        type="button"
       >
         <Heading1 className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("## ")}
+        onClick={(e) => handleButtonClick(e, "## ")}
         title="Título 2"
+        type="button"
       >
         <Heading2 className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("### ")}
+        onClick={(e) => handleButtonClick(e, "### ")}
         title="Título 3"
+        type="button"
       >
         <Heading3 className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => insertText("```\n", "\n```")}
+        onClick={(e) => handleButtonClick(e, "```\n", "\n```")}
         title="Bloco de Código"
+        type="button"
       >
         <Code className="h-4 w-4" />
       </Button>
