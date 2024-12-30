@@ -11,11 +11,14 @@ const Projects = () => {
     queryFn: getStoredProjects,
   });
 
+  // Filter only published projects
+  const publishedProjects = projects.filter(project => project.published);
+
   return (
     <div className="container mx-auto px-4 py-20 animate-fadeIn">
       <h1 className="text-4xl font-bold mb-12 text-center">{t("projects.title")}</h1>
       <div className="grid md:grid-cols-2 gap-8">
-        {projects.map((project) => (
+        {publishedProjects.map((project) => (
           <Card key={project.id} className="overflow-hidden animate-slideUp">
             <Link to={`/projects/${project.id}`}>
               <div className="aspect-video">
