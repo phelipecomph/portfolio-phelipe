@@ -11,6 +11,7 @@ interface MarkdownContentProps {
 
 // Add proper typing for the code component props
 interface CodeProps extends React.HTMLAttributes<HTMLElement> {
+  node?: any;
   inline?: boolean;
   className?: string;
   children?: React.ReactNode;
