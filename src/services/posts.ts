@@ -17,6 +17,7 @@ export const getPosts = async (): Promise<BlogPost[]> => {
     ...post,
     title: post.title as unknown as BlogPost['title'],
     content: post.content as unknown as BlogPost['content'],
+    description: post.description as unknown as BlogPost['description'],
   }));
 };
 
@@ -28,6 +29,7 @@ export const savePosts = async (posts: BlogPost[]) => {
         ...post,
         title: post.title as unknown as Json,
         content: post.content as unknown as Json,
+        description: post.description as unknown as Json,
       })),
       { onConflict: 'id' }
     );

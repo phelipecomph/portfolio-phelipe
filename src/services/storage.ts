@@ -16,6 +16,7 @@ interface RawBlogPost {
   id: string;
   title: Json;
   content: Json;
+  description: Json;
   published: boolean;
   created_at: string;
 }
@@ -65,6 +66,7 @@ export const getStoredPosts = async (): Promise<BlogPost[]> => {
   return (data as RawBlogPost[] || []).map(post => ({
     ...post,
     title: transformLocalizedContent(post.title),
-    content: transformLocalizedContent(post.content)
+    content: transformLocalizedContent(post.content),
+    description: transformLocalizedContent(post.description)
   }));
 };
