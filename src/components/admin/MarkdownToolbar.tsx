@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Bold,
   Italic,
@@ -10,9 +9,17 @@ import {
   Heading3,
   Code,
 } from "lucide-react";
+import { MarkdownButton } from "./MarkdownButton";
 
 interface MarkdownToolbarProps {
   textareaRef: React.RefObject<HTMLTextAreaElement>;
+}
+
+interface ToolbarButton {
+  icon: any;
+  title: string;
+  before: string;
+  after?: string;
 }
 
 export function MarkdownToolbar({ textareaRef }: MarkdownToolbarProps) {
@@ -36,93 +43,32 @@ export function MarkdownToolbar({ textareaRef }: MarkdownToolbarProps) {
   };
 
   const handleButtonClick = (e: React.MouseEvent, before: string, after?: string) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
     insertText(before, after);
   };
 
+  const toolbarButtons: ToolbarButton[] = [
+    { icon: Bold, title: "Negrito", before: "**", after: "**" },
+    { icon: Italic, title: "Itálico", before: "*", after: "*" },
+    { icon: Link, title: "Link", before: "[", after: "](url)" },
+    { icon: Image, title: "Imagem", before: "![alt text](", after: ")" },
+    { icon: List, title: "Lista", before: "- " },
+    { icon: Heading1, title: "Título 1", before: "# " },
+    { icon: Heading2, title: "Título 2", before: "## " },
+    { icon: Heading3, title: "Título 3", before: "### " },
+    { icon: Code, title: "Bloco de Código", before: "```\n", after: "\n```" },
+  ];
+
   return (
     <div className="flex flex-wrap gap-2 p-2 bg-muted rounded-md mb-2">
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "**", "**")}
-        title="Negrito"
-        type="button" // Explicitly set type to button
-      >
-        <Bold className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "*", "*")}
-        title="Itálico"
-        type="button"
-      >
-        <Italic className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "[", "](url)")}
-        title="Link"
-        type="button"
-      >
-        <Link className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "![alt text](", ")")}
-        title="Imagem"
-        type="button"
-      >
-        <Image className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "- ")}
-        title="Lista"
-        type="button"
-      >
-        <List className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "# ")}
-        title="Título 1"
-        type="button"
-      >
-        <Heading1 className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "## ")}
-        title="Título 2"
-        type="button"
-      >
-        <Heading2 className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "### ")}
-        title="Título 3"
-        type="button"
-      >
-        <Heading3 className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={(e) => handleButtonClick(e, "```\n", "\n```")}
-        title="Bloco de Código"
-        type="button"
-      >
-        <Code className="h-4 w-4" />
-      </Button>
+      {toolbarButtons.map((button, index) => (
+        <MarkdownButton
+          key={index}
+          icon={button.icon}
+          title={button.title}
+          onClick={(e) => handleButtonClick(e, button.before, button.after)}
+        />
+      ))}
     </div>
   );
 }
