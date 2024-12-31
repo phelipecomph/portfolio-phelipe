@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           content: Json
           created_at: string
+          description: Json
           id: string
           published: boolean | null
           title: Json
@@ -20,6 +21,7 @@ export type Database = {
         Insert: {
           content?: Json
           created_at?: string
+          description?: Json
           id?: string
           published?: boolean | null
           title?: Json
@@ -27,6 +29,7 @@ export type Database = {
         Update: {
           content?: Json
           created_at?: string
+          description?: Json
           id?: string
           published?: boolean | null
           title?: Json
