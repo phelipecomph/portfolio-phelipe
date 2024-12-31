@@ -16,6 +16,7 @@ export interface Project {
 export interface BlogPost {
   id: string;
   title: LocalizedContent;
+  description: LocalizedContent;
   content: LocalizedContent;
   published: boolean;
   created_at: string;
