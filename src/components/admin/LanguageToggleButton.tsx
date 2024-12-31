@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 interface LanguageToggleButtonProps {
   currentLanguage: "en" | "pt";
@@ -8,14 +7,28 @@ interface LanguageToggleButtonProps {
 
 export function LanguageToggleButton({ currentLanguage, onToggle }: LanguageToggleButtonProps) {
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={onToggle}
-      className="gap-2"
+    <ToggleGroup
+      type="single"
+      value={currentLanguage}
+      onValueChange={(value) => {
+        if (value && value !== currentLanguage) onToggle();
+      }}
+      className="border rounded-md"
     >
-      <Globe className="h-4 w-4" />
-      {currentLanguage === "en" ? "EN" : "PT"}
-    </Button>
+      <ToggleGroupItem
+        value="pt"
+        aria-label="Portuguese"
+        className="px-3 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+      >
+        PT
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        value="en"
+        aria-label="English"
+        className="px-3 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+      >
+        EN
+      </ToggleGroupItem>
+    </ToggleGroup>
   );
 }
