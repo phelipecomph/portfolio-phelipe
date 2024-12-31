@@ -14,12 +14,22 @@ interface ProjectFormProps {
 }
 
 export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
-  const { t } = useTranslation();
-  const [currentLanguage, setCurrentLanguage] = useState<"en" | "pt">("en");
+  const { t, i18n } = useTranslation();
+  const [currentLanguage, setCurrentLanguage] = useState<"en" | "pt">(i18n.language as "en" | "pt");
+  const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const toggleLanguage = () => {
-    setCurrentLanguage(prev => prev === "en" ? "pt" : "en");
+    const newLang = currentLanguage === "en" ? "pt" : "en";
+    setCurrentLanguage(newLang);
+    
+    // Update input values to show content in the new language
+    if (titleRef.current) {
+      titleRef.current.value = project?.title?.[newLang] || "";
+    }
+    if (descriptionRef.current) {
+      descriptionRef.current.value = project?.description?.[newLang] || "";
+    }
   };
 
   return (
@@ -33,6 +43,7 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1">
           <Input
+            ref={titleRef}
             name={`title_${currentLanguage}`}
             defaultValue={project?.title?.[currentLanguage]}
             required
