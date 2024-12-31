@@ -28,7 +28,7 @@ export function PostForm({ post, onSubmit, onCancel }: PostFormProps) {
         e.preventDefault();
         onSubmit(new FormData(e.currentTarget));
       }}
-      className="h-[calc(100vh-8rem)] flex flex-col gap-4"
+      className="h-full flex flex-col gap-4"
     >
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1">
@@ -46,7 +46,7 @@ export function PostForm({ post, onSubmit, onCancel }: PostFormProps) {
         />
       </div>
 
-      <div className="flex-1 flex flex-col gap-2">
+      <div className="flex-1 flex flex-col gap-2 min-h-[500px]">
         <Input
           name={`description_${currentLanguage}`}
           defaultValue={post?.description?.[currentLanguage]}
@@ -59,12 +59,12 @@ export function PostForm({ post, onSubmit, onCancel }: PostFormProps) {
           name={`content_${currentLanguage}`}
           defaultValue={post?.content?.[currentLanguage]}
           required
-          className="flex-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[400px]"
           placeholder={t(`admin.content${currentLanguage === "en" ? "En" : "Pt"}`)}
         />
       </div>
 
-      <div className="flex items-center justify-between border-t pt-4">
+      <div className="flex items-center justify-between border-t pt-4 mt-auto">
         <div className="flex items-center gap-2">
           <Switch
             name="published"

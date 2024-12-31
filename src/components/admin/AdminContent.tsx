@@ -95,6 +95,10 @@ export function AdminContent({ activeTab }: AdminContentProps) {
           en: String(formData.get("content_en") || ""),
           pt: String(formData.get("content_pt") || ""),
         },
+        description: {
+          en: String(formData.get("description_en") || ""),
+          pt: String(formData.get("description_pt") || ""),
+        },
         published: formData.get("published") === "on",
         created_at: editItem?.created_at || new Date().toISOString(),
       } as BlogPost;
@@ -107,8 +111,6 @@ export function AdminContent({ activeTab }: AdminContentProps) {
       queryClient.setQueryData(['posts'], updatedPosts);
     }
 
-    setIsDialogOpen(false);
-    setEditItem(null);
     toast({
       title: "Success",
       description: `Item ${editItem ? "updated" : "created"} successfully`,
@@ -124,7 +126,7 @@ export function AdminContent({ activeTab }: AdminContentProps) {
               {activeTab === "projects" ? t("admin.addProject") : t("admin.addPost")}
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-7xl h-[calc(100vh-2rem)]">
+          <DialogContent className="max-w-7xl h-[calc(100vh-2rem)] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>
                 {editItem

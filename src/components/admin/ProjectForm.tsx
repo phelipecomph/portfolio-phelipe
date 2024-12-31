@@ -28,7 +28,7 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
         e.preventDefault();
         onSubmit(new FormData(e.currentTarget));
       }}
-      className="h-[calc(100vh-8rem)] flex flex-col gap-4"
+      className="h-full flex flex-col gap-4"
     >
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1">
@@ -46,25 +46,19 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
         />
       </div>
 
-      <div className="flex-1 flex flex-col gap-2">
-        <Input
-          name={`description_${currentLanguage}`}
-          defaultValue={project?.description?.[currentLanguage]}
-          required
-          placeholder={t(`admin.description${currentLanguage === "en" ? "En" : "Pt"}`)}
-        />
+      <div className="flex-1 flex flex-col gap-2 min-h-[500px]">
         <MarkdownToolbar textareaRef={descriptionRef} />
         <textarea
           ref={descriptionRef}
           name={`description_${currentLanguage}`}
           defaultValue={project?.description?.[currentLanguage]}
           required
-          className="flex-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[400px]"
           placeholder={t(`admin.description${currentLanguage === "en" ? "En" : "Pt"}`)}
         />
       </div>
 
-      <div className="flex items-center justify-between border-t pt-4">
+      <div className="flex items-center justify-between border-t pt-4 mt-auto">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <Switch
