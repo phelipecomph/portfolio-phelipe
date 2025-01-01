@@ -24,14 +24,19 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
     description: {
       en: project?.description?.en || "",
       pt: project?.description?.pt || ""
+    },
+    content: {
+      en: project?.description?.en || "",
+      pt: project?.description?.pt || ""
     }
   });
 
   const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
 
   // Update form data when inputs change
-  const handleInputChange = (field: "title" | "description", value: string) => {
+  const handleInputChange = (field: "title" | "description" | "content", value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: {
@@ -49,6 +54,9 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
     if (descriptionRef.current) {
       descriptionRef.current.value = formData.description[currentLanguage];
     }
+    if (contentRef.current) {
+      contentRef.current.value = formData.content[currentLanguage];
+    }
   }, [currentLanguage, formData]);
 
   const toggleLanguage = () => {
@@ -65,6 +73,8 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
     formDataObj.set("title_pt", formData.title.pt);
     formDataObj.set("description_en", formData.description.en);
     formDataObj.set("description_pt", formData.description.pt);
+    formDataObj.set("content_en", formData.content.en);
+    formDataObj.set("content_pt", formData.content.pt);
     
     onSubmit(formDataObj);
   };
@@ -94,18 +104,19 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
 
       <div className="flex-1 flex flex-col gap-2 min-h-[500px]">
         <Input
+          ref={descriptionRef}
           name={`description_${currentLanguage}`}
           defaultValue={formData.description[currentLanguage]}
           onChange={(e) => handleInputChange("description", e.target.value)}
           required
           placeholder={t(`admin.description${currentLanguage === "en" ? "En" : "Pt"}`)}
         />
-        <MarkdownToolbar textareaRef={descriptionRef} />
+        <MarkdownToolbar textareaRef={contentRef} />
         <textarea
-          ref={descriptionRef}
+          ref={contentRef}
           name={`content_${currentLanguage}`}
-          defaultValue={project?.description?.[currentLanguage]}
-          onChange={(e) => handleInputChange("description", e.target.value)}
+          defaultValue={formData.content[currentLanguage]}
+          onChange={(e) => handleInputChange("content", e.target.value)}
           required
           className="flex-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[400px]"
           placeholder={t(`admin.content${currentLanguage === "en" ? "En" : "Pt"}`)}
