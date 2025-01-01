@@ -38,9 +38,12 @@ const ProjectDetail = () => {
           <h1 className="text-4xl font-bold mb-6">
             {project.title[i18n.language as keyof typeof project.title]}
           </h1>
+          <div className="text-muted-foreground mb-8">
+            {project.description[i18n.language as keyof typeof project.description]}
+          </div>
           <MarkdownContent 
-            content={project.description[i18n.language as keyof typeof project.description]}
-            className="mt-6"
+            content={project.content[i18n.language as keyof typeof project.content]}
+            className="mt-6 prose dark:prose-invert max-w-none"
           />
         </div>
       </Card>
