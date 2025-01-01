@@ -72,6 +72,10 @@ export function AdminContent({ activeTab }: AdminContentProps) {
           en: String(formData.get("description_en") || ""),
           pt: String(formData.get("description_pt") || ""),
         },
+        content: {
+          en: String(formData.get("content_en") || ""),
+          pt: String(formData.get("content_pt") || ""),
+        },
         featured: formData.get("featured") === "on",
         published: formData.get("published") === "on",
         image: String(formData.get("image") || ""),
@@ -115,6 +119,8 @@ export function AdminContent({ activeTab }: AdminContentProps) {
       title: "Success",
       description: `Item ${editItem ? "updated" : "created"} successfully`,
     });
+    
+    setIsDialogOpen(false);
   };
 
   return (
