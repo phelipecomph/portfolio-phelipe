@@ -1,18 +1,8 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { ProjectForm } from "./ProjectForm";
-import { PostForm } from "./PostForm";
 import { AdminTable } from "./AdminTable";
+import { AdminActions } from "./AdminActions";
 import { saveProjects, getProjects } from "@/services/projects";
 import { savePosts, getPosts } from "@/services/posts";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -23,11 +13,9 @@ interface AdminContentProps {
 }
 
 export function AdminContent({ activeTab }: AdminContentProps) {
-  const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [editItem, setEditItem] = useState<Project | BlogPost | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { data: projects = [] } = useQuery({
     queryKey: ['projects'],
@@ -53,11 +41,6 @@ export function AdminContent({ activeTab }: AdminContentProps) {
       title: "Success",
       description: `Item deleted successfully`,
     });
-  };
-
-  const handleEdit = (item: Project | BlogPost) => {
-    setEditItem(item);
-    setIsDialogOpen(true);
   };
 
   const handleSave = async (formData: FormData) => {
@@ -119,52 +102,15 @@ export function AdminContent({ activeTab }: AdminContentProps) {
       title: "Success",
       description: `Item ${editItem ? "updated" : "created"} successfully`,
     });
-    
-    setIsDialogOpen(false);
   };
 
   return (
     <Card className="p-6">
-      <div className="flex justify-end mb-6">
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => setEditItem(null)}>
-              {activeTab === "projects" ? t("admin.addProject") : t("admin.addPost")}
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-7xl h-[calc(100vh-2rem)] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>
-                {editItem
-                  ? activeTab === "projects"
-                    ? t("admin.editProject")
-                    : t("admin.editPost")
-                  : activeTab === "projects"
-                  ? t("admin.addProject")
-                  : t("admin.addPost")}
-              </DialogTitle>
-            </DialogHeader>
-            {activeTab === "projects" ? (
-              <ProjectForm
-                project={editItem as Project}
-                onSubmit={handleSave}
-                onCancel={() => setIsDialogOpen(false)}
-              />
-            ) : (
-              <PostForm
-                post={editItem as BlogPost}
-                onSubmit={handleSave}
-                onCancel={() => setIsDialogOpen(false)}
-              />
-            )}
-          </DialogContent>
-        </Dialog>
-      </div>
-
+      <AdminActions activeTab={activeTab} onSave={handleSave} />
       <AdminTable
         items={activeTab === "projects" ? projects : posts}
         type={activeTab}
-        onEdit={handleEdit}
+        onEdit={setEditItem}
         onDelete={handleDelete}
       />
     </Card>
