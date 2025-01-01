@@ -17,6 +17,7 @@ export const getProjects = async (): Promise<Project[]> => {
     ...project,
     title: project.title as unknown as Project['title'],
     description: project.description as unknown as Project['description'],
+    content: project.content as unknown as Project['content'],
   }));
 };
 
@@ -28,6 +29,7 @@ export const saveProjects = async (projects: Project[]) => {
         ...project,
         title: project.title as unknown as Json,
         description: project.description as unknown as Json,
+        content: project.content as unknown as Json,
       })),
       { onConflict: 'id' }
     );

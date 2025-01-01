@@ -6,6 +6,7 @@ interface RawProject {
   id: string;
   title: Json;
   description: Json;
+  content: Json;
   image: string;
   featured: boolean;
   published: boolean;
@@ -55,7 +56,8 @@ export const getStoredProjects = async (): Promise<Project[]> => {
   return (data as RawProject[] || []).map(project => ({
     ...project,
     title: transformLocalizedContent(project.title),
-    description: transformLocalizedContent(project.description)
+    description: transformLocalizedContent(project.description),
+    content: transformLocalizedContent(project.content || { en: '', pt: '' })
   }));
 };
 

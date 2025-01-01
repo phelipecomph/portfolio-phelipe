@@ -25,6 +25,9 @@ const ProjectDetail = () => {
   }
 
   const currentLanguage = i18n.language as keyof typeof project.content;
+  const content = project.content?.[currentLanguage] || '';
+  const title = project.title?.[currentLanguage] || '';
+  const description = project.description?.[currentLanguage] || '';
 
   return (
     <div className="container mx-auto px-4 py-20 animate-fadeIn">
@@ -32,19 +35,19 @@ const ProjectDetail = () => {
         <div className="aspect-video">
           <img
             src={project.image}
-            alt={project.title[currentLanguage]}
+            alt={title}
             className="w-full h-full object-cover"
           />
         </div>
         <div className="p-8">
           <h1 className="text-4xl font-bold mb-6">
-            {project.title[currentLanguage]}
+            {title}
           </h1>
           <div className="text-muted-foreground mb-8">
-            {project.description[currentLanguage]}
+            {description}
           </div>
           <MarkdownContent 
-            content={project.content[currentLanguage] || ''}
+            content={content}
             className="mt-6"
           />
         </div>
