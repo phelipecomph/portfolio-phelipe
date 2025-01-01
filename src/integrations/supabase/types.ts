@@ -38,6 +38,7 @@ export type Database = {
       }
       projects: {
         Row: {
+          content: Json
           created_at: string
           description: Json
           featured: boolean | null
@@ -47,6 +48,7 @@ export type Database = {
           title: Json
         }
         Insert: {
+          content?: Json
           created_at?: string
           description?: Json
           featured?: boolean | null
@@ -56,6 +58,7 @@ export type Database = {
           title?: Json
         }
         Update: {
+          content?: Json
           created_at?: string
           description?: Json
           featured?: boolean | null

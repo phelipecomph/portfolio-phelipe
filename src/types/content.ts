@@ -7,6 +7,7 @@ export interface Project {
   id: string;
   title: LocalizedContent;
   description: LocalizedContent;
+  content: LocalizedContent;
   image: string;
   featured: boolean;
   published: boolean;
