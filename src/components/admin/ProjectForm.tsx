@@ -73,22 +73,21 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
       onSubmit={handleSubmit}
       className="h-full flex flex-col gap-4"
     >
-      <div className="flex items-center justify-between gap-4">
-        <ProjectFormFields
-          project={project}
-          currentLanguage={currentLanguage}
-          titleRef={titleRef}
-          descriptionRef={descriptionRef}
-          contentRef={contentRef}
-          onInputChange={handleInputChange}
-        />
+      <div className="flex items-center justify-end mb-4">
         <LanguageToggleButton
           currentLanguage={currentLanguage}
           onToggle={() => setCurrentLanguage(prev => prev === "en" ? "pt" : "en")}
         />
       </div>
 
-      <ProjectFormActions project={project} onCancel={onCancel} />
+      <ProjectFormFields
+        project={project}
+        currentLanguage={currentLanguage}
+        titleRef={titleRef}
+        descriptionRef={descriptionRef}
+        contentRef={contentRef}
+        onInputChange={handleInputChange}
+      />
 
       <Input
         type="text"
@@ -98,6 +97,8 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
         placeholder="Image URL"
         className="mt-4"
       />
+
+      <ProjectFormActions project={project} onCancel={onCancel} />
     </form>
   );
 }

@@ -22,26 +22,25 @@ export function ProjectFormFields({
   const { t } = useTranslation();
 
   return (
-    <>
-      <div className="flex-1">
-        <Input
-          ref={titleRef}
-          name={`title_${currentLanguage}`}
-          onChange={(e) => onInputChange("title", e.target.value)}
-          required
-          placeholder={t(`admin.title${currentLanguage === "en" ? "En" : "Pt"}`)}
-          className="text-xl font-bold"
-        />
-      </div>
+    <div className="flex flex-col gap-4 w-full">
+      <Input
+        ref={titleRef}
+        name={`title_${currentLanguage}`}
+        onChange={(e) => onInputChange("title", e.target.value)}
+        required
+        placeholder={t(`admin.title${currentLanguage === "en" ? "En" : "Pt"}`)}
+        className="text-xl font-bold"
+      />
 
-      <div className="flex-1 flex flex-col gap-2 min-h-[500px]">
-        <Input
-          ref={descriptionRef}
-          name={`description_${currentLanguage}`}
-          onChange={(e) => onInputChange("description", e.target.value)}
-          required
-          placeholder={t(`admin.description${currentLanguage === "en" ? "En" : "Pt"}`)}
-        />
+      <Input
+        ref={descriptionRef}
+        name={`description_${currentLanguage}`}
+        onChange={(e) => onInputChange("description", e.target.value)}
+        required
+        placeholder={t(`admin.description${currentLanguage === "en" ? "En" : "Pt"}`)}
+      />
+
+      <div className="flex flex-col gap-2 min-h-[500px]">
         <MarkdownToolbar textareaRef={contentRef} />
         <textarea
           ref={contentRef}
@@ -52,6 +51,6 @@ export function ProjectFormFields({
           placeholder={t(`admin.content${currentLanguage === "en" ? "En" : "Pt"}`)}
         />
       </div>
-    </>
+    </div>
   );
 }
