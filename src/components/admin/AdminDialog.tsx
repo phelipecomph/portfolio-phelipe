@@ -12,7 +12,7 @@ interface AdminDialogProps {
 
 export function AdminDialog({ activeTab, editItem, onSubmit, onCancel }: AdminDialogProps) {
   return (
-    <DialogContent className="max-w-7xl h-[calc(100vh-2rem)] overflow-y-auto">
+    <DialogContent className="max-w-4xl h-[90vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle>
           {editItem

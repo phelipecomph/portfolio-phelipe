@@ -98,6 +98,7 @@ export function AdminContent({ activeTab }: AdminContentProps) {
       queryClient.setQueryData(['posts'], updatedPosts);
     }
 
+    setEditItem(null);
     toast({
       title: "Success",
       description: `Item ${editItem ? "updated" : "created"} successfully`,
@@ -106,7 +107,12 @@ export function AdminContent({ activeTab }: AdminContentProps) {
 
   return (
     <Card className="p-6">
-      <AdminActions activeTab={activeTab} onSave={handleSave} />
+      <AdminActions 
+        activeTab={activeTab} 
+        onSave={handleSave} 
+        editItem={editItem}
+        setEditItem={setEditItem}
+      />
       <AdminTable
         items={activeTab === "projects" ? projects : posts}
         type={activeTab}

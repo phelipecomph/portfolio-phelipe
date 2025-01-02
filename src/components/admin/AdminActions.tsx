@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { AdminDialog } from "./AdminDialog";
@@ -8,16 +7,16 @@ import type { Project, BlogPost } from "@/types/content";
 interface AdminActionsProps {
   activeTab: "projects" | "posts";
   onSave: (formData: FormData) => void;
+  editItem: Project | BlogPost | null;
+  setEditItem: (item: Project | BlogPost | null) => void;
 }
 
-export function AdminActions({ activeTab, onSave }: AdminActionsProps) {
+export function AdminActions({ activeTab, onSave, editItem, setEditItem }: AdminActionsProps) {
   const { t } = useTranslation();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editItem, setEditItem] = useState<Project | BlogPost | null>(null);
 
   return (
     <div className="flex justify-end mb-6">
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog open={!!editItem} onOpenChange={(open) => !open && setEditItem(null)}>
         <DialogTrigger asChild>
           <Button onClick={() => setEditItem(null)}>
             {activeTab === "projects" ? t("admin.addProject") : t("admin.addPost")}
@@ -28,9 +27,9 @@ export function AdminActions({ activeTab, onSave }: AdminActionsProps) {
           editItem={editItem}
           onSubmit={(formData) => {
             onSave(formData);
-            setIsDialogOpen(false);
+            setEditItem(null);
           }}
-          onCancel={() => setIsDialogOpen(false)}
+          onCancel={() => setEditItem(null)}
         />
       </Dialog>
     </div>
