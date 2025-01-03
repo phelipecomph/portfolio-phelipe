@@ -16,6 +16,9 @@ export function Navbar() {
       <Link to="/" className="hover:text-primary transition-colors">
         {t("nav.home")}
       </Link>
+      <Link to="/about" className="hover:text-primary transition-colors">
+        {t("nav.about")}
+      </Link>
       <Link to="/projects" className="hover:text-primary transition-colors">
         {t("nav.projects")}
       </Link>
