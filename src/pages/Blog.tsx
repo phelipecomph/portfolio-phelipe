@@ -17,19 +17,19 @@ const Blog = () => {
   return (
     <div className="container mx-auto px-4 py-20 animate-fadeIn">
       <h1 className="text-4xl font-bold mb-12 text-center">Blog</h1>
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="max-w-3xl mx-auto space-y-8">
         {publishedPosts.map((post) => (
           <Card key={post.id} className="overflow-hidden animate-slideUp">
             <Link to={`/blog/${post.id}`}>
-              <div className="p-6">
+              <div className="p-8">
                 <p className="text-sm text-muted-foreground mb-2">
-                  {new Date().toLocaleDateString(i18n.language)}
+                  {new Date(post.created_at).toLocaleDateString(i18n.language)}
                 </p>
-                <h3 className="text-2xl font-bold mb-4">
+                <h3 className="text-3xl font-bold mb-4">
                   {post.title[i18n.language as keyof typeof post.title]}
                 </h3>
-                <p className="text-muted-foreground">
-                  {post.content[i18n.language as keyof typeof post.content].substring(0, 150)}...
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  {post.content[i18n.language as keyof typeof post.content].substring(0, 300)}...
                 </p>
               </div>
             </Link>
