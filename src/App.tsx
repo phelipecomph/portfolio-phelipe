@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Home from "./pages/Index";
+import About from "./pages/About";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Blog from "./pages/Blog";
@@ -43,6 +44,7 @@ const App = () => {
               <main className="pt-16">
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
                   <Route path="/projects" element={<Projects />} />
                   <Route path="/projects/:id" element={<ProjectDetail />} />
                   <Route path="/blog" element={<Blog />} />
