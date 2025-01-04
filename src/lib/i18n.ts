@@ -8,11 +8,11 @@ const resources = {
       "nav.projects": "Projects",
       "nav.blog": "Blog",
       "nav.contact": "Contact",
-      "nav.about": "About",
       "hero.title": "Data Scientist & Python Developer",
       "hero.description": "Transforming complex data into actionable insights and building powerful solutions that drive innovation",
       "projects.title": "Projects",
       "featured.title": "Featured Project",
+      "featured.learnMore": "Learn More",
       "index.viewProjects": "View Projects",
       "contact.title": "Get in Touch",
       "contact.name": "Name",
@@ -39,13 +39,6 @@ const resources = {
       "admin.featured": "Featured",
       "admin.published": "Published",
       "admin.imageUrl": "Image URL",
-      "about.title": "About Me",
-      "about.bio.title": "Bio",
-      "about.bio.content": "Data Scientist and Python Developer with a passion for transforming complex data into actionable insights. Experienced in machine learning, data analysis, and building scalable solutions.",
-      "about.skills.title": "Skills",
-      "about.skills.content": "Python, Machine Learning, Data Analysis, SQL, Cloud Computing (AWS, GCP), Deep Learning, Natural Language Processing, Data Visualization",
-      "about.experience.title": "Experience",
-      "about.experience.content": "Over 5 years of experience in data science and software development, working with various industries including finance, healthcare, and technology. Led multiple successful projects delivering innovative solutions using cutting-edge technologies."
     }
   },
   pt: {
@@ -54,10 +47,10 @@ const resources = {
       "nav.projects": "Projetos",
       "nav.blog": "Blog",
       "nav.contact": "Contato",
-      "nav.about": "Sobre",
       "hero.title": "Cientista de Dados & Desenvolvedor Python",
       "hero.description": "Transformando dados complexos em insights acionáveis e construindo soluções poderosas que impulsionam a inovação",
       "featured.title": "Projeto em Destaque",
+      "featured.learnMore": "Saiba Mais",
       "index.viewProjects": "Projetos",
       "projects.title": "Projetos",
       "contact.title": "Entre em Contato",
@@ -85,13 +78,6 @@ const resources = {
       "admin.featured": "Destaque",
       "admin.published": "Publicado",
       "admin.imageUrl": "URL da Imagem",
-      "about.title": "Sobre Mim",
-      "about.bio.title": "Bio",
-      "about.bio.content": "Cientista de Dados e Desenvolvedor Python com paixão por transformar dados complexos em insights acionáveis. Experiência em machine learning, análise de dados e construção de soluções escaláveis.",
-      "about.skills.title": "Habilidades",
-      "about.skills.content": "Python, Machine Learning, Análise de Dados, SQL, Computação em Nuvem (AWS, GCP), Deep Learning, Processamento de Linguagem Natural, Visualização de Dados",
-      "about.experience.title": "Experiência",
-      "about.experience.content": "Mais de 5 anos de experiência em ciência de dados e desenvolvimento de software, trabalhando com várias indústrias, incluindo finanças, saúde e tecnologia. Liderou múltiplos projetos bem-sucedidos entregando soluções inovadoras usando tecnologias de ponta."
     }
   }
 };

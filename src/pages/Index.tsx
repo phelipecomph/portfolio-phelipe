@@ -63,7 +63,7 @@ const Index = () => {
               <Linkedin className="w-6 h-6" />
             </a>
             <a
-              href="https://youtube.com/@phelipemuller"
+              href="https://youtube.com/@_scientist"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-purple-600 transition-colors"
@@ -97,7 +97,7 @@ const Index = () => {
                   {featuredProject.description[i18n.language as keyof typeof featuredProject.description]}
                 </p>
                 <Button asChild className="w-fit bg-purple-600 hover:bg-purple-700">
-                  <Link to={`/projects/${featuredProject.id}`}>Learn More</Link>
+                  <Link to={`/projects/${featuredProject.id}`}>{t("featured.learnMore")}</Link>
                 </Button>
               </div>
             </div>
