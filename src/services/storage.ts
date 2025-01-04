@@ -11,6 +11,7 @@ interface RawProject {
   featured: boolean;
   published: boolean;
   created_at: string;
+  display_order: number;
 }
 
 interface RawBlogPost {
@@ -20,6 +21,7 @@ interface RawBlogPost {
   description: Json;
   published: boolean;
   created_at: string;
+  display_order: number;
 }
 
 interface LocalizedJson {
@@ -57,7 +59,8 @@ export const getStoredProjects = async (): Promise<Project[]> => {
     ...project,
     title: transformLocalizedContent(project.title),
     description: transformLocalizedContent(project.description),
-    content: transformLocalizedContent(project.content || { en: '', pt: '' })
+    content: transformLocalizedContent(project.content || { en: '', pt: '' }),
+    display_order: project.display_order
   }));
 };
 
@@ -69,6 +72,7 @@ export const getStoredPosts = async (): Promise<BlogPost[]> => {
     ...post,
     title: transformLocalizedContent(post.title),
     content: transformLocalizedContent(post.content),
-    description: transformLocalizedContent(post.description)
+    description: transformLocalizedContent(post.description),
+    display_order: post.display_order
   }));
 };
