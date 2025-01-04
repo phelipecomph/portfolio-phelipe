@@ -6,7 +6,7 @@ export const getPosts = async (): Promise<BlogPost[]> => {
   const { data, error } = await supabase
     .from('posts')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('display_order', { ascending: true });
 
   if (error) {
     console.error('Error fetching posts:', error);

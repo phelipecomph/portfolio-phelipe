@@ -14,6 +14,7 @@ export type Database = {
           content: Json
           created_at: string
           description: Json
+          display_order: number
           id: string
           published: boolean | null
           title: Json
@@ -22,6 +23,7 @@ export type Database = {
           content?: Json
           created_at?: string
           description?: Json
+          display_order?: number
           id?: string
           published?: boolean | null
           title?: Json
@@ -30,6 +32,7 @@ export type Database = {
           content?: Json
           created_at?: string
           description?: Json
+          display_order?: number
           id?: string
           published?: boolean | null
           title?: Json
@@ -41,6 +44,7 @@ export type Database = {
           content: Json
           created_at: string
           description: Json
+          display_order: number
           featured: boolean | null
           id: string
           image: string
@@ -51,6 +55,7 @@ export type Database = {
           content?: Json
           created_at?: string
           description?: Json
+          display_order?: number
           featured?: boolean | null
           id?: string
           image: string
@@ -61,6 +66,7 @@ export type Database = {
           content?: Json
           created_at?: string
           description?: Json
+          display_order?: number
           featured?: boolean | null
           id?: string
           image?: string

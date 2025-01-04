@@ -43,6 +43,20 @@ export function AdminContent({ activeTab }: AdminContentProps) {
     });
   };
 
+  const handleReorder = async (items: Project[] | BlogPost[]) => {
+    if (activeTab === "projects") {
+      await saveProjects(items as Project[]);
+      queryClient.setQueryData(['projects'], items);
+    } else {
+      await savePosts(items as BlogPost[]);
+      queryClient.setQueryData(['posts'], items);
+    }
+    toast({
+      title: "Success",
+      description: "Order updated successfully",
+    });
+  };
+
   const handleSave = async (formData: FormData) => {
     if (activeTab === "projects") {
       const updatedProject = {
@@ -63,6 +77,7 @@ export function AdminContent({ activeTab }: AdminContentProps) {
         published: formData.get("published") === "on",
         image: String(formData.get("image") || ""),
         created_at: editItem?.created_at || new Date().toISOString(),
+        display_order: editItem?.display_order || projects.length + 1,
       } as Project;
 
       const updatedProjects = editItem
@@ -88,6 +103,7 @@ export function AdminContent({ activeTab }: AdminContentProps) {
         },
         published: formData.get("published") === "on",
         created_at: editItem?.created_at || new Date().toISOString(),
+        display_order: editItem?.display_order || posts.length + 1,
       } as BlogPost;
 
       const updatedPosts = editItem
@@ -118,6 +134,7 @@ export function AdminContent({ activeTab }: AdminContentProps) {
         type={activeTab}
         onEdit={setEditItem}
         onDelete={handleDelete}
+        onReorder={handleReorder}
       />
     </Card>
   );

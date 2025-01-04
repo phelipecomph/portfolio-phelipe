@@ -12,6 +12,7 @@ export interface Project {
   featured: boolean;
   published: boolean;
   created_at: string;
+  display_order: number;
 }
 
 export interface BlogPost {
@@ -21,4 +22,5 @@ export interface BlogPost {
   content: LocalizedContent;
   published: boolean;
   created_at: string;
+  display_order: number;
 }
