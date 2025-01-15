@@ -10,7 +10,7 @@ export const getPosts = async (): Promise<BlogPost[]> => {
 
   if (error) {
     console.error('Error fetching posts:', error);
-    return [];
+    throw error;
   }
 
   return (data || []).map(post => ({

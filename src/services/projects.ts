@@ -10,7 +10,7 @@ export const getProjects = async (): Promise<Project[]> => {
 
   if (error) {
     console.error('Error fetching projects:', error);
-    return [];
+    throw error;
   }
 
   return (data || []).map(project => ({
