@@ -3,16 +3,37 @@ import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { getProjects } from "@/services/projects";
 import { useQuery } from "@tanstack/react-query";
+import { useToast } from "@/components/ui/use-toast";
 
 const Projects = () => {
   const { t, i18n } = useTranslation();
-  const { data: projects = [] } = useQuery({
+  const { toast } = useToast();
+  
+  const { data: projects = [], error } = useQuery({
     queryKey: ['projects'],
     queryFn: getProjects,
+    onError: (error) => {
+      console.error('Error fetching projects:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load projects. Please try again later.",
+        variant: "destructive",
+      });
+    },
   });
 
   // Filter only published projects
   const publishedProjects = projects.filter(project => project.published);
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-20">
+        <h1 className="text-4xl font-bold mb-12 text-center text-red-500">
+          {t("errors.failedToLoad")}
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-20 animate-fadeIn">
