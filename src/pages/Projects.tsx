@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { getProjects } from "@/services/projects";
 import { useQuery } from "@tanstack/react-query";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const Projects = () => {
   const { t, i18n } = useTranslation();
@@ -12,13 +12,15 @@ const Projects = () => {
   const { data: projects = [], error } = useQuery({
     queryKey: ['projects'],
     queryFn: getProjects,
-    onError: (error) => {
-      console.error('Error fetching projects:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load projects. Please try again later.",
-        variant: "destructive",
-      });
+    meta: {
+      onError: (error: Error) => {
+        console.error('Error fetching projects:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load projects. Please try again later.",
+          variant: "destructive",
+        });
+      },
     },
   });
 
