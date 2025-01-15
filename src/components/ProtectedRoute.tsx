@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
         
         if (!session) {
           // Try to sign in anonymously if there's no session
-          const { error } = await supabase.auth.signInWithoutEmail();
+          const { error } = await supabase.auth.signInAnonymously();
           if (error) {
             console.error("Error signing in anonymously:", error);
             navigate("/login");
@@ -36,7 +36,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
       if (!session) {
         try {
           // Try to sign in anonymously when session is lost
-          const { error } = await supabase.auth.signInWithoutEmail();
+          const { error } = await supabase.auth.signInAnonymously();
           if (error) {
             console.error("Error signing in anonymously:", error);
             navigate("/login");
